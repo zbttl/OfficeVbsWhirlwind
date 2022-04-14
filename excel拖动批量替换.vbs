@@ -25,7 +25,9 @@ For path_index= 0 To WScript.Arguments.Count -1
         Set objWorksheet = objxls.Sheets(1)
         columns_count = objWorksheet.UsedRange.Columns.Count
         row_count = objWorksheet.UsedRange.Rows.Count
-        objWorksheet.Range(objWorksheet.cells(1,1),objWorksheet.cells(row_count,columns_count)).Replace "гу", "Fish"
+        for change_string=0 To UBound(old_string)
+            objWorksheet.Range(objWorksheet.cells(1,1),objWorksheet.cells(row_count,columns_count)).Replace old_string(change_string), new_string(change_string)
+        Next
         objxls.saveas changexlsPath
         objxls.Close
         objExcel.Quit
