@@ -5,6 +5,7 @@ old_string=array("2021","10月31日","11月30日","12月31日","10月","11月","12月")
 new_string=array("2022","1月31日","2月28日","3月31日","1月","2月","3月")
 
 For i= 0 To WScript.Arguments.Count -1
+   ' 读取doc/excel，兼容office和新版旧版wps
    docPath = WScript.Arguments(i)
    docPath = fso.GetAbsolutePathName(docPath)
    If LCase(Right(docPath, 4)) = ".doc" Or LCase(Right(docPath, 5)) = ".docx" Then
@@ -19,11 +20,13 @@ For i= 0 To WScript.Arguments.Count -1
                End If
             End If
          End If
+      ' 处理完后的文件文件名
       changedocPath = fso.GetParentFolderName(docPath) & "\" & "change" & fso.GetFileName (docPath) 
 
       objWord.Visible = False
       Set objDoc = objWord.documents.open(docPath)
       Set objSelection = objWord.Selection
+      ' 循环替换字符串
       for change_string=0 To UBound(old_string)
          With objSelection.Find 
          .ClearFormatting 

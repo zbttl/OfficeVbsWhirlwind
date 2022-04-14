@@ -1,6 +1,7 @@
 'Convert .doc or .docx to .pdf files via Send To menu
 Set fso = CreateObject("Scripting.FileSystemObject")
 For i= 0 To WScript.Arguments.Count -1
+   ' 读取doc/excel，兼容office和新版旧版wps
    docPath = WScript.Arguments(i)
    docPath = fso.GetAbsolutePathName(docPath)
    If LCase(Right(docPath, 4)) = ".doc" Or LCase(Right(docPath, 5)) = ".docx" Then
@@ -15,10 +16,12 @@ For i= 0 To WScript.Arguments.Count -1
                End If
             End If
          End If
+      ' 处理完后的文件文件名
       pdfPath = fso.GetParentFolderName(docPath) & "\" & _
     fso.GetBaseName(docpath) & ".pdf"
       objWord.Visible = False
       Set objDoc = objWord.documents.open(docPath)
+      ' 转换为 pdf
       objDoc.saveas pdfPath, 17
       objDoc.Close
       objWord.Quit   

@@ -1,6 +1,7 @@
 'Convert .xls or .xlsx to .pdf files via Send To menu
 Set fso = CreateObject("Scripting.FileSystemObject")
 For i= 0 To WScript.Arguments.Count -1
+   ' 读取拖入的doc/excel，兼容office和新版旧版wps
    xlsPath = WScript.Arguments(i)
    xlsPath = fso.GetAbsolutePathName(xlsPath)
    If LCase(Right(xlsPath, 4)) = ".xls" Or LCase(Right(xlsPath, 5)) = ".xlsx" Then
@@ -15,10 +16,12 @@ For i= 0 To WScript.Arguments.Count -1
                End If
             End If
          End If
+      ' 处理完后的文件文件名
       changexlsPath = fso.GetParentFolderName(xlsPath) & "\" & _
     fso.GetBaseName(xlspath) & "change.pdf"
       objExcel.Visible = False
       Set objxls = objExcel.Workbooks.open(xlsPath)
+      ' 转换为 pdf
       objExcel.ActiveSheet.ExportAsFixedFormat 0, xlsPath ,0, 1, 0,,,0
       objExcel.ActiveWorkbook.Close
       objExcel.Application.Quit
