@@ -25,12 +25,16 @@ For path_index= 0 To WScript.Arguments.Count -1
         
         objExcel.Visible = False
         Set objxls = objExcel.Workbooks.open(xlsPath)
-        Set objWorksheet = objxls.Sheets(1)
-        ' Ñ­»·Ìæ»»×Ö·û´®
-        columns_count = objWorksheet.UsedRange.Columns.Count
-        row_count = objWorksheet.UsedRange.Rows.Count
-        for change_string=0 To UBound(old_string)
-            objWorksheet.Range(objWorksheet.cells(1,1),objWorksheet.cells(row_count,columns_count)).Replace old_string(change_string), new_string(change_string)
+        '±éÀúËùÓÐ¹¤×÷²¾
+        objcount = objxls.Sheets.Count
+        for objcount_index=1 To objcount
+            Set objWorksheet = objxls.Sheets(objcount_index)
+            ' Ñ­»·Ìæ»»×Ö·û´®
+            columns_count = objWorksheet.UsedRange.Columns.Count
+            row_count = objWorksheet.UsedRange.Rows.Count
+            for change_string=0 To UBound(old_string)
+                objWorksheet.Range(objWorksheet.cells(1,1),objWorksheet.cells(row_count,columns_count)).Replace old_string(change_string), new_string(change_string)
+            Next
         Next
         objxls.saveas changexlsPath
         objxls.Close
