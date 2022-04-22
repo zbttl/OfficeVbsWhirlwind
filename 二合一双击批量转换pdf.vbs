@@ -45,7 +45,7 @@ List2.close
 
 Call LogOut("文件遍历已完成，已找到" & Sum & "个word文档," & Sum2 & "个excel文档")
 
-If MsgBox("文件遍历已完成，已找到" & Sum & "个word文档，详细列表在" & vbCrlf & fso.GetFolder(Path).Path & "\ConvertFileListDoc.txt" & vbCrlf & "您可以自行修改列表以增删要转换的文档" & vbCrlf & vbCrlf & "是否将这些文档转换为PDF格式？", vbYesNo + vbInformation, "文档遍历完成") = vbYes Then
+If MsgBox("文件遍历已完成，已找到" & Sum & "个word文档，详细列表在" & vbCrlf & fso.GetFolder(Path).Path & "\ConvertFileListDoc.txt" & vbCrlf & "文件遍历已完成，已找到" & Sum2 & "个Excel文档，详细列表在" & vbCrlf & fso.GetFolder(Path).Path & "\ConvertFileListExcel.txt" & vbCrlf &"您可以自行修改列表以增删要转换的文档" & vbCrlf & vbCrlf & "是否将这些文档转换为PDF格式？", vbYesNo + vbInformation, "文档遍历完成") = vbYes Then
     ' If MsgBox("是否在转换完毕后删除DOC文档?", vbYesNo+vbInformation, "是否在转换完毕后删除源文档?") = vbYes Then
     '     IsChooseDelete = MsgBox("请再次确认，是否在转换完毕后删除DOC文档?", vbYesNo + vbExclamation, "是否在转换完毕后删除源文档?")
     ' End If
@@ -53,7 +53,7 @@ else
     Msgbox("已取消转换操作")
     Wscript.Quit
 End If
-MsgBox "请在开始转换前退出所有Word文档避免文档占用错误发生", vbOKOnly + vbExclamation, "警告"
+' MsgBox "请在开始转换前退出所有Word文档避免文档占用错误发生", vbOKOnly + vbExclamation, "警告"
 
 '创建Word对象，兼容WPS
 Const wdFormatPDF = 17
@@ -84,7 +84,7 @@ Do While List.AtEndOfLine <> True
     End If
 loop
 List.close
-MsgBox "现在开始转换，若是在运行过程中弹出Word窗口"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"重要的事情说三遍！关闭会导致脚本退出", vbOKOnly + vbExclamation, "警告"
+' MsgBox "现在开始转换，若是在运行过程中弹出Word窗口"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"请直接最小化Word窗口，不要关闭!"&vbCrlf&"重要的事情说三遍！关闭会导致脚本退出", vbOKOnly + vbExclamation, "警告"
 Dim Finished
 Finished = 0
 Set List= fso.opentextFile("ConvertFileListDoc.txt",1,true)
@@ -109,31 +109,31 @@ Do While List.AtEndOfLine <> True
 loop
 '扫尾处理开始
 List.close
-LogOut("文档转换已完成")
+' LogOut("文档转换已完成")
 ' LogFile.close 
 'ConvertFileListDoc.txt和log.txt要自动删除的请去掉下面两行开头单引号
 'fso.deleteFile "ConvertFileListDoc.txt"
 'fso.deleteFile "log.txt"
 
-Dim Msg
-Msg = "已成功转换" & Finished & "个文件"
-If IsChooseDelete = vbYes Then
-    Msg=Msg + "并成功删除源文件"
-End If
-MsgBox Msg & vbCrlf & "日志文件在" & fso.GetFolder(Path).Path & "\log.txt"
-' Set fso = nothing
+' Dim Msg
+' Msg = "已成功转换" & Finished & "个文件"
+' ' If IsChooseDelete = vbYes Then
+' '     Msg=Msg + "并成功删除源文件"
+' ' End If
+' MsgBox Msg & vbCrlf & "日志文件在" & fso.GetFolder(Path).Path & "\log.txt"
+' ' Set fso = nothing
 WordApp.Quit
 
 
-If MsgBox("文件遍历已完成，已找到" & Sum2 & "个Excel文档，详细列表在" & vbCrlf & fso.GetFolder(Path).Path & "\ConvertFileListExcel.txt" & vbCrlf & "您可以自行修改列表以增删要转换的文档" & vbCrlf & vbCrlf & "是否将这些文档转换为PDF格式？", vbYesNo + vbInformation, "文档遍历完成") = vbYes Then
-    ' If MsgBox("是否在转换完毕后删除DOC文档?", vbYesNo+vbInformation, "是否在转换完毕后删除源文档?") = vbYes Then
-    '     IsChooseDelete = MsgBox("请再次确认，是否在转换完毕后删除DOC文档?", vbYesNo + vbExclamation, "是否在转换完毕后删除源文档?")
-    ' End If
-else
-    Msgbox("已取消转换操作")
-    Wscript.Quit
-End If
-MsgBox "请在开始转换前退出所有Word文档避免文档占用错误发生", vbOKOnly + vbExclamation, "警告"
+' If MsgBox("文件遍历已完成，已找到" & Sum2 & "个Excel文档，详细列表在" & vbCrlf & fso.GetFolder(Path).Path & "\ConvertFileListExcel.txt" & vbCrlf & "您可以自行修改列表以增删要转换的文档" & vbCrlf & vbCrlf & "是否将这些文档转换为PDF格式？", vbYesNo + vbInformation, "文档遍历完成") = vbYes Then
+'     ' If MsgBox("是否在转换完毕后删除DOC文档?", vbYesNo+vbInformation, "是否在转换完毕后删除源文档?") = vbYes Then
+'     '     IsChooseDelete = MsgBox("请再次确认，是否在转换完毕后删除DOC文档?", vbYesNo + vbExclamation, "是否在转换完毕后删除源文档?")
+'     ' End If
+' else
+'     Msgbox("已取消转换操作")
+'     Wscript.Quit
+' End If
+' MsgBox "请在开始转换前退出所有Word文档避免文档占用错误发生", vbOKOnly + vbExclamation, "警告"
 
 '创建Word对象，兼容WPS
 On Error Resume Next
@@ -163,7 +163,7 @@ Do While List.AtEndOfLine <> True
     End If
 loop
 List.close
-MsgBox "现在开始转换，若是在运行过程中弹出Word窗口"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"重要的事情说三遍！关闭会导致脚本退出", vbOKOnly + vbExclamation, "警告"
+' MsgBox "现在开始转换，若是在运行过程中弹出Excel窗口"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"请直接最小化Excel窗口，不要关闭!"&vbCrlf&"重要的事情说三遍！关闭会导致脚本退出", vbOKOnly + vbExclamation, "警告"
 Dim Finished2
 Finished2 = 0
 Set List= fso.opentextFile("ConvertFileListExcel.txt",1,true)
@@ -176,6 +176,7 @@ Do While List.AtEndOfLine <> True
         If ExcelApp.Visible = true Then
             ExcelApp.ActiveWorkbook.ActiveWindow.WindowState = 2 'wdWindowStateMinimize
         End If
+
         objExcel.ActiveSheet.ExportAsFixedFormat 0, Left(FilePath2,InstrRev(FilePath2,".")) & "pdf" ,0, 1, 0,,,0 
         LogOut("文档" & FilePath2 & "已转换完成。(" & Finished2 & "/" & Sum2 & ")")
         ExcelApp.ActiveWorkbook.Close  
@@ -195,7 +196,7 @@ LogFile.close
 'fso.deleteFile "log.txt"
 
 Dim Msg2
-Msg2 = "已成功转换" & Finished2 & "个文件"
+Msg2 = "已成功转换" & Finished & "个Word文件" & vbCrlf &"已成功转换" & Finished2 & "个Excel文件"
 ' If IsChooseDelete = vbYes Then
 '     Msg2=Msg2 + "并成功删除源文件"
 ' End If
