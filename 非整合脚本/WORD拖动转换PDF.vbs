@@ -1,8 +1,8 @@
 'Convert .doc or .docx to .pdf files via Send To menu
 Set fso = CreateObject("Scripting.FileSystemObject")
-For i= 0 To WScript.Arguments.Count -1
+For ipath_index= 0 To WScript.Arguments.Count -1
    ' ¶ÁÈ¡doc/excel£¬¼æÈÝofficeºÍÐÂ°æ¾É°æwps
-   docPath = WScript.Arguments(i)
+   docPath = WScript.Arguments(path_index)
    docPath = fso.GetAbsolutePathName(docPath)
    If LCase(Right(docPath, 4)) = ".doc" Or LCase(Right(docPath, 5)) = ".docx" Then
       Set objWord = CreateObject("Word.Application")

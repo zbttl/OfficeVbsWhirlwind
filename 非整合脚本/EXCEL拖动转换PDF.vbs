@@ -1,8 +1,8 @@
 'Convert .xls or .xlsx to .pdf files via Send To menu
 Set fso = CreateObject("Scripting.FileSystemObject")
-For i= 0 To WScript.Arguments.Count -1
+For path_index= 0 To WScript.Arguments.Count -1
    ' 读取拖入的doc/excel，兼容office和新版旧版wps
-   xlsPath = WScript.Arguments(i)
+   xlsPath = WScript.Arguments(path_index)
    xlsPath = fso.GetAbsolutePathName(xlsPath)
    If LCase(Right(xlsPath, 4)) = ".xls" Or LCase(Right(xlsPath, 5)) = ".xlsx" Then
       Set objExcel = CreateObject("Excel.Application")

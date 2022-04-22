@@ -1,12 +1,12 @@
 'word拖动批量替换
 Set fso = CreateObject("Scripting.FileSystemObject")
 '要替换的字符串们
-old_string=array("2021","10月31日","11月30日","12月31日","10月","11月","12月")
-new_string=array("2022","1月31日","2月28日","3月31日","1月","2月","3月")
+old_string=array("2021","10月31日","11月30日","12月31日","10月","11月","12月","-10-","-11-","-12-","/10/","/11/","/12/")
+new_string=array("2022","1月31日","2月28日","3月31日","1月","2月","3月","-1-","-2-","-3-","/1/","/2/","/3/")
 
-For i= 0 To WScript.Arguments.Count -1
+For path_index= 0 To WScript.Arguments.Count -1
    ' 读取doc/excel，兼容office和新版旧版wps
-   docPath = WScript.Arguments(i)
+   docPath = WScript.Arguments(path_index)
    docPath = fso.GetAbsolutePathName(docPath)
    If LCase(Right(docPath, 4)) = ".doc" Or LCase(Right(docPath, 5)) = ".docx" Then
       Set objWord = CreateObject("Word.Application")

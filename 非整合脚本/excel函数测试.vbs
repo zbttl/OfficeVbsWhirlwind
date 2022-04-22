@@ -1,8 +1,6 @@
-'excel拖动批量替换
+'excel函数测试
 Set fso = CreateObject("Scripting.FileSystemObject")
-'要替换的字符串们
-old_string=array("2021","10月31日","11月30日","12月31日","10月","11月","12月")
-new_string=array("2022","1月31日","2月28日","3月31日","1月","2月","3月")
+
 
 For path_index= 0 To WScript.Arguments.Count -1
     ' 读取拖入的doc/excel，兼容office和新版旧版wps
@@ -25,18 +23,14 @@ For path_index= 0 To WScript.Arguments.Count -1
         
         objExcel.Visible = False
         Set objxls = objExcel.Workbooks.open(xlsPath)
-        '遍历所有工作簿
+        
         objcount = objxls.Sheets.Count
         for objcount_index=1 To objcount
             Set objWorksheet = objxls.Sheets(objcount_index)
             ' 循环替换字符串
-            columns_count = objWorksheet.UsedRange.Columns.Count
-            row_count = objWorksheet.UsedRange.Rows.Count
-            for change_string=0 To UBound(old_string)
-                objWorksheet.Range(objWorksheet.cells(1,1),objWorksheet.cells(row_count,columns_count)).Replace old_string(change_string), new_string(change_string)
-            Next
+            MsgBox objWorksheet.Name
         Next
-        objxls.saveas changexlsPath
+
         objxls.Close
         objExcel.Quit
     End If   
