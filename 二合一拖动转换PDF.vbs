@@ -43,11 +43,11 @@ For path_index= 0 To WScript.Arguments.Count -1
          End If
       ' 处理完后的文件文件名
       changexlsPath = fso.GetParentFolderName(xlsPath) & "\" & _
-    fso.GetBaseName(xlspath) & "change.pdf"
+    fso.GetBaseName(xlspath) & ".pdf"
       objExcel.Visible = False
       Set objxls = objExcel.Workbooks.open(xlsPath)
       ' 转换为 pdf
-      objExcel.ActiveSheet.ExportAsFixedFormat 0, xlsPath ,0, 1, 0,,,0
+      objExcel.ActiveSheet.ExportAsFixedFormat 0, changexlsPath ,0, 1, 0,,,0
       objExcel.ActiveWorkbook.Close
       objExcel.Application.Quit
    End If   
