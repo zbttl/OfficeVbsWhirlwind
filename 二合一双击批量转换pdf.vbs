@@ -79,7 +79,7 @@ Dim FilePath,FileLine
 Set List= fso.opentextFile("ConvertFileListDoc.txt",1,true)
 Do While List.AtEndOfLine <> True 
     FileLine=List.ReadLine
-    If FileLine <> "" and Mid(FileLine,1,2) <> "~$" Then
+    If FileLine <> "" and Mid(fso.GetFileName (FilePath),1,2) <> "~$" Then
         Sum = Sum + 1 '获取用户修改后的文件列表行数
     End If
 loop
@@ -90,7 +90,7 @@ Finished = 0
 Set List= fso.opentextFile("ConvertFileListDoc.txt",1,true)
 Do While List.AtEndOfLine <> True 
     FilePath=List.ReadLine
-    If Mid(FilePath,1,2) <> "~$" Then '不处理word临时文件
+    If Mid(fso.GetFileName (FilePath),1,2) <> "~$" Then '不处理word临时文件
         Set objDoc = WordApp.Documents.Open(FilePath)
         'WordApp.Visible=false '设置视图不可见（避免运行时因为各种问题导致的可见）
         '上面这行有问题，现在遇到大批量有啥宏定义的运行起来就是一闪一闪的，还不如没有
@@ -158,7 +158,7 @@ Dim FilePath2,FileLine2
 Set List= fso.opentextFile("ConvertFileListExcel.txt",1,true)
 Do While List.AtEndOfLine <> True 
     FileLine2=List.ReadLine
-    If FileLine2 <> "" and Mid(FileLine2,1,2) <> "~$" Then
+    If FileLine2 <> "" and Mid(fso.GetFileName (FilePath2),1,2) <> "~$" Then
         Sum2 = Sum2 + 1 '获取用户修改后的文件列表行数
     End If
 loop
@@ -169,7 +169,7 @@ Finished2 = 0
 Set List= fso.opentextFile("ConvertFileListExcel.txt",1,true)
 Do While List.AtEndOfLine <> True 
     FilePath2=List.ReadLine
-    If Mid(FilePath2,1,2) <> "~$" Then '不处理word临时文件
+    If Mid(fso.GetFileName (FilePath2),1,2) <> "~$" Then '不处理word临时文件
         Set objExcel = ExcelApp.Workbooks.Open(FilePath2)
         'ExcelApp.Visible=false '设置视图不可见（避免运行时因为各种问题导致的可见）
         '上面这行有问题，现在遇到大批量有啥宏定义的运行起来就是一闪一闪的，还不如没有
