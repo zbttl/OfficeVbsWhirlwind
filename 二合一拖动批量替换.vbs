@@ -1,8 +1,8 @@
 'word拖动批量替换
 Set fso = CreateObject("Scripting.FileSystemObject")
 '要替换的字符串们
-old_string=array("2021","10月31日","11月30日","12月31日","10月","11月","12月","-10-","-11-","-12-","/10/","/11/","/12/","十月","十一月","十二月","2022-2022")
-new_string=array("2022","1月31日","2月28日","3月31日","1月","2月","3月","-1-","-2-","-3-","/1/","/2/","/3/","一月","二月","三月","2021-2022")
+old_string=array("2021年","2021","10月31日","11月30日","12月31日","10月","11月","12月","-10-","-11-","-12-","/10/","/11/","/12/","十月","十一月","十二月","2022-2022")
+new_string=array("2022年","2022","1月31日","2月28日","3月31日","1月","2月","3月","-1-","-2-","-3-","/1/","/2/","/3/","一月","二月","三月","2021-2022")
 ' old_string=array("2022-2022")
 ' new_string=array("2021-2022")
 
@@ -24,7 +24,6 @@ For path_index= 0 To WScript.Arguments.Count -1
          End If
       ' 处理完后的文件文件名
       changedocPath = fso.GetParentFolderName(docPath) & "\" & "change" & fso.GetFileName (docPath) 
-
       objWord.Visible = False
       Set objDoc = objWord.documents.open(docPath)
       Set objSelection = objWord.Selection
