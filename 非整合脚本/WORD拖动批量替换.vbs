@@ -28,14 +28,17 @@ For path_index= 0 To WScript.Arguments.Count -1
       Set objSelection = objWord.Selection
       ' 循环替换字符串
       for change_string=0 To UBound(old_string)
+         '参考文章https://docs.microsoft.com/en-us/office/vba/api/word.find.execute
          With objSelection.Find 
          .ClearFormatting 
          .Text = old_string(change_string)
          .Replacement.ClearFormatting 
          .Replacement.Text = new_string(change_string)
          .Forward=True
-         .Wrap=wdFindContinue
+         'vbs不能用wdFindContinue，只能用数字1，否则word中如果有分页符，分页符前内容无法被替换
+         .Wrap=1
          .MatchWildcards=True
+         'vbs无法使用命名参数https://stackoverflow.com/questions/57463710/using-find-method-in-vbscript-for-search-word-file-can-find-character-but-not-r，replace参数只能用该种命令执行。为什么前面有10个逗号？因为在参考文章中，replace是第十一个参数
          .Execute ,,,,,,,,,,2
          End With
       Next
