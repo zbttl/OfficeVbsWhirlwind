@@ -26,14 +26,16 @@ Sub TreatSubFolder(fld)
     Dim File
     Dim ts
     For Each File In fld.Files '遍历该文件夹对象下的所有文件对象
-        If UCase(fso.GetExtensionName(File)) ="DOC" or UCase(fso.GetExtensionName(File)) ="DOCX" Then
-            List.WriteLine(File.Path)
-            Sum = Sum + 1
-        End If
-        If UCase(fso.GetExtensionName(File)) ="XLS" or UCase(fso.GetExtensionName(File)) ="XLSX" Then
-            List2.WriteLine(File.Path)
-            Sum2 = Sum2 + 1
-        End If
+        IF InStr(File,"change")=0 and Mid(fso.GetFileName (File),1,2) <> "~$" Then '排除隐藏文件和已转换文件
+            If UCase(fso.GetExtensionName(File)) ="DOC" or UCase(fso.GetExtensionName(File)) ="DOCX" Then
+                List.WriteLine(File.Path)
+                Sum = Sum + 1
+            End If
+            If UCase(fso.GetExtensionName(File)) ="XLS" or UCase(fso.GetExtensionName(File)) ="XLSX" Then
+                List2.WriteLine(File.Path)
+                Sum2 = Sum2 + 1
+            End If
+        End if
     Next
     Dim subfld
     For Each subfld In fld.SubFolders '递归遍历子文件夹对象
