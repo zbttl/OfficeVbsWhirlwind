@@ -28,13 +28,15 @@ Sub TreatSubFolder(fld)
     Dim File
     Dim ts
     For Each File In fld.Files '遍历该文件夹对象下的所有文件对象
-        If UCase(fso.GetExtensionName(File)) ="DOC" or UCase(fso.GetExtensionName(File)) ="DOCX" Then
-            List.WriteLine(File.Path)
-            Sum = Sum + 1
-        End If
-        If UCase(fso.GetExtensionName(File)) ="XLS" or UCase(fso.GetExtensionName(File)) ="XLSX" Then
-            List2.WriteLine(File.Path)
-            Sum2 = Sum2 + 1
+        IF InStr(File,"change")=0 and Mid(fso.GetFileName (File),1,2) <> "~$" Then '排除隐藏文件和已转换文件
+            If UCase(fso.GetExtensionName(File)) ="DOC" or UCase(fso.GetExtensionName(File)) ="DOCX" and InStr(File,"change")=0 Then
+                List.WriteLine(File.Path)
+                Sum = Sum + 1
+            End If
+            If UCase(fso.GetExtensionName(File)) ="XLS" or UCase(fso.GetExtensionName(File)) ="XLSX" and InStr(File,"change")=0 Then
+                List2.WriteLine(File.Path)
+                Sum2 = Sum2 + 1
+            End If
         End If
     Next
     Dim subfld
@@ -108,7 +110,7 @@ Do While List.AtEndOfLine <> True
             .Replacement.ClearFormatting 
             .Replacement.Text = new_string(change_string)
             .Forward=True
-            .Wrap=wdFindContinue
+            .Wrap=1
             .MatchWildcards=True
             .Execute ,,,,,,,,,,2
             End With
