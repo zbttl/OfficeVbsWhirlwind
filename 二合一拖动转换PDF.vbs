@@ -55,7 +55,10 @@ For path_index= 0 To WScript.Arguments.Count -1
       End With
       ' ×ª»»Îª pdf
       objExcel.ActiveSheet.ExportAsFixedFormat 0, changexlsPath ,0, 1, 0,,,0
+      
+      objExcel.DisplayAlerts = False
       objExcel.ActiveWorkbook.Close
+      objExcel.DisplayAlerts = True
       objExcel.Application.Quit
    End If   
 Next

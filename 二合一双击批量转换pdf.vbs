@@ -188,8 +188,11 @@ Do While List.AtEndOfLine <> True
         End With
         
         objExcel.ActiveSheet.ExportAsFixedFormat 0, Left(FilePath2,InstrRev(FilePath2,".")) & "pdf" ,0, 1, 0,,,0 
+
         LogOut("文档" & FilePath2 & "已转换完成。(" & Finished2 & "/" & Sum2 & ")")
-        ExcelApp.ActiveWorkbook.Close  
+        ExcelApp.DisplayAlerts = False
+        ExcelApp.ActiveWorkbook.Close
+        ExcelApp.DisplayAlerts = True  
         Finished2 = Finished2 + 1
     End If
     ' If IsChooseDelete = vbYes Then
