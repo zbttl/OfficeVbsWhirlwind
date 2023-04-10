@@ -12,6 +12,16 @@ function find1(findstr)
     find1=lens + len(findstr)
 end function
 
+Function ReplaceMultipleSpacesWithOne(inputString)
+    Dim oRegExp
+    Set oRegExp = New RegExp
+    
+    oRegExp.Pattern = " {2,}" ' 匹配两个或更多连续空格
+    oRegExp.Global = True ' 替换所有匹配项
+    
+    ReplaceMultipleSpacesWithOne = oRegExp.Replace(inputString, " ") ' 用一个空格替换匹配的空格
+End Function
+
 Function CountLines(strInput)
     Dim originalLength, noLineBreaksLength
     originalLength = Len(strInput)
@@ -58,11 +68,14 @@ For path_index= 0 To WScript.Arguments.Count -1
             For columns_index = 0 To columns_count - 1
             'CInt向上取整https://blog.csdn.net/iamlaosong/article/details/49333779
             'VBA的lenB:https://blog.csdn.net/iamlaosong/article/details/49333779
-            Columns_line=CInt(find1(objWorksheet.Cells(row_index,columns_index+1))/columns_width(columns_index)+0.5)
 
             strCellContent = objWorksheet.Cells(row_index,columns_index+1) 
             strCellContent = Replace(strCellContent, Chr(10), " ")
+            strCellContent = Replace(strCellContent, ChrW(160), " ")
+            strCellContent = ReplaceMultipleSpacesWithOne(strCellContent)
             objWorksheet.Cells(row_index,columns_index+1) = strCellContent
+
+            Columns_line=CInt(find1(objWorksheet.Cells(row_index,columns_index+1))/columns_width(columns_index)+0.5)
 
             ' Columns_line2=CountLines(objWorksheet.Cells(row_index,columns_index+1))
             ' If Columns_line<Columns_line2 Then
