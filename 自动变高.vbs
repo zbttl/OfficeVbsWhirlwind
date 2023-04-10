@@ -12,6 +12,12 @@ function find1(findstr)
     find1=lens + len(findstr)
 end function
 
+Function CountLines(strInput)
+    Dim originalLength, noLineBreaksLength
+    originalLength = Len(strInput)
+    noLineBreaksLength = Len(Replace(strInput, Chr(10), ""))
+    CountLines = originalLength - noLineBreaksLength + 1
+End Function
 
 Set fso = CreateObject("Scripting.FileSystemObject")
 For path_index= 0 To WScript.Arguments.Count -1
@@ -57,7 +63,14 @@ For path_index= 0 To WScript.Arguments.Count -1
             Columns_line_Max = Columns_line
             End If
             Next
+            On Error Resume Next ' 启用错误处理
             objWorksheet.Rows(row_index).RowHeight = Columns_line_Max * 15+15
+            '超过最大行高会报错
+            If Err.Number <> 0 Then
+                'WScript.Echo "行："&row_index&"列："&columns_index+1&"RowHeight:"&objWorksheet.Rows(row_index).RowHeight&"Columns_line_Max"&Columns_line_Max&"发生错误：" & Err.Description & " (错误代码：" & Err.Number & ")"
+                objWorksheet.Rows(row_index).RowHeight = 409
+                Err.Clear ' 清除错误，以免影响后续代码
+            End If
             Next
         Next 
         objxls.saveas changexlsPath
