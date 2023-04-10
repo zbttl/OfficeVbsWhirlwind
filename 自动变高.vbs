@@ -59,6 +59,11 @@ For path_index= 0 To WScript.Arguments.Count -1
             'CInt向上取整https://blog.csdn.net/iamlaosong/article/details/49333779
             'VBA的lenB:https://blog.csdn.net/iamlaosong/article/details/49333779
             Columns_line=CInt(find1(objWorksheet.Cells(row_index,columns_index+1))/columns_width(columns_index)+0.5)
+
+            strCellContent = objWorksheet.Cells(row_index,columns_index+1) 
+            strCellContent = Replace(strCellContent, Chr(10), " ")
+            objWorksheet.Cells(row_index,columns_index+1) = strCellContent
+
             ' Columns_line2=CountLines(objWorksheet.Cells(row_index,columns_index+1))
             ' If Columns_line<Columns_line2 Then
             '     Columns_line=Columns_line2
