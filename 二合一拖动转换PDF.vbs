@@ -46,6 +46,13 @@ For path_index= 0 To WScript.Arguments.Count -1
     fso.GetBaseName(xlspath) & ".pdf"
       objExcel.Visible = False
       Set objxls = objExcel.Workbooks.open(xlsPath)
+      ' 设置工作表为横向布局并调整所有列以适应一页
+      With objExcel.ActiveSheet.PageSetup
+      .Orientation = 2 ' xlLandscape
+      .Zoom = False
+      .FitToPagesWide = 1
+      .FitToPagesTall = False
+      End With
       ' 转换为 pdf
       objExcel.ActiveSheet.ExportAsFixedFormat 0, changexlsPath ,0, 1, 0,,,0
       objExcel.ActiveWorkbook.Close

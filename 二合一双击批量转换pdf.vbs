@@ -179,6 +179,14 @@ Do While List.AtEndOfLine <> True
             ExcelApp.ActiveWorkbook.ActiveWindow.WindowState = 2 'wdWindowStateMinimize
         End If
 
+        ' 设置工作表为横向布局并调整所有列以适应一页
+        With objExcel.ActiveSheet.PageSetup
+        .Orientation = 2 ' xlLandscape
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+        End With
+        
         objExcel.ActiveSheet.ExportAsFixedFormat 0, Left(FilePath2,InstrRev(FilePath2,".")) & "pdf" ,0, 1, 0,,,0 
         LogOut("文档" & FilePath2 & "已转换完成。(" & Finished2 & "/" & Sum2 & ")")
         ExcelApp.ActiveWorkbook.Close  
