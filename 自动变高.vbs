@@ -32,30 +32,33 @@ For path_index= 0 To WScript.Arguments.Count -1
         changexlsPath = fso.GetParentFolderName(xlsPath) & "\" & "change" & fso.GetFileName (xlspath) 
         objExcel.Visible = False
         Set objxls = objExcel.Workbooks.open(xlsPath)
-        Set objWorksheet = objxls.Sheets(1)
-        '记录每列的宽度
-        columns_count = objWorksheet.UsedRange.Columns.Count
-        ReDim columns_width(columns_count-1)
-        For columns_count_index=0 To columns_count-1
-        If (objWorksheet.Columns(columns_count_index + 1).ColumnWidth) Mod 2 = 0 Then
-        columns_width(columns_count_index) = objWorksheet.Columns(columns_count_index + 1).ColumnWidth
-        Else
-        columns_width(columns_count_index) = objWorksheet.Columns(columns_count_index + 1).ColumnWidth - 1
-        End If
-        Next
-        '计算每列的最大高度
-        dim Columns_line,Columns_line_Max
-        For row_index = 3 To objWorksheet.UsedRange.Rows.Count
-        Columns_line_Max = 0
-        For columns_index = 0 To columns_count - 1
-        'CInt向上取整https://blog.csdn.net/iamlaosong/article/details/49333779
-        'VBA的lenB:https://blog.csdn.net/iamlaosong/article/details/49333779
-        Columns_line=CInt(find1(objWorksheet.Cells(row_index,columns_index+1))/columns_width(columns_index)+0.5)
-        If Columns_line>Columns_line_Max Then
-        Columns_line_Max = Columns_line
-        End If
-        Next
-        objWorksheet.Rows(row_index).RowHeight = Columns_line_Max * 15+2
+        objcount = objxls.Sheets.Count
+        for objcount_index=1 To objcount
+            Set objWorksheet = objxls.Sheets(objcount_index)
+            '记录每列的宽度
+            columns_count = objWorksheet.UsedRange.Columns.Count
+            ReDim columns_width(columns_count-1)
+            For columns_count_index=0 To columns_count-1
+            If (objWorksheet.Columns(columns_count_index + 1).ColumnWidth) Mod 2 = 0 Then
+            columns_width(columns_count_index) = objWorksheet.Columns(columns_count_index + 1).ColumnWidth
+            Else
+            columns_width(columns_count_index) = objWorksheet.Columns(columns_count_index + 1).ColumnWidth - 1
+            End If
+            Next
+            '计算每列的最大高度
+            dim Columns_line,Columns_line_Max
+            For row_index = 3 To objWorksheet.UsedRange.Rows.Count
+            Columns_line_Max = 0
+            For columns_index = 0 To columns_count - 1
+            'CInt向上取整https://blog.csdn.net/iamlaosong/article/details/49333779
+            'VBA的lenB:https://blog.csdn.net/iamlaosong/article/details/49333779
+            Columns_line=CInt(find1(objWorksheet.Cells(row_index,columns_index+1))/columns_width(columns_index)+0.5)
+            If Columns_line>Columns_line_Max Then
+            Columns_line_Max = Columns_line
+            End If
+            Next
+            objWorksheet.Rows(row_index).RowHeight = Columns_line_Max * 15+15
+            Next
         Next 
         objxls.saveas changexlsPath
         objxls.Close
