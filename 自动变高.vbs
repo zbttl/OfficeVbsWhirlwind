@@ -29,6 +29,13 @@ Function CountLines(strInput)
     CountLines = originalLength - noLineBreaksLength + 1
 End Function
 
+Function CountLinesADDat(strInput)
+    Dim originalLength, noLineBreaksLength
+    originalLength = Len(strInput)
+    noLineBreaksLength = Len(Replace(strInput, Chr(10), "")) + Len(Replace(strInput, "@", ""))
+    CountLinesADDat = 2 * originalLength - noLineBreaksLength + 1
+End Function
+
 Set fso = CreateObject("Scripting.FileSystemObject")
 For path_index= 0 To WScript.Arguments.Count -1
     xlsPath = WScript.Arguments(path_index)
@@ -81,6 +88,23 @@ For path_index= 0 To WScript.Arguments.Count -1
             ' If Columns_line<Columns_line2 Then
             '     Columns_line=Columns_line2
             ' End If
+
+            
+            
+            On Error Resume Next ' 启用错误处理
+            Columns_line2=CountLinesADDat(objWorksheet.Cells(row_index,columns_index+1))
+            '超过最大行高会报错
+            If Err.Number <> 0 Then
+                WScript.Echo "行："&row_index&"列："&columns_index+1&"Columns_line2"&Columns_line2&"发生错误：" & Err.Description & " (错误代码：" & Err.Number & ")"
+                'objWorksheet.Rows(row_index).RowHeight = 409
+                Err.Clear ' 清除错误，以免影响后续代码
+            End If
+
+
+            If Columns_line<Columns_line2 Then
+                Columns_line=Columns_line2
+            End If
+
             If Columns_line>Columns_line_Max Then
             Columns_line_Max = Columns_line
             End If
